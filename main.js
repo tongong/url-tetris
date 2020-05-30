@@ -44,6 +44,8 @@ const tetrominoes = [
 ];
 var field = [];
 var fallingTetrominoes = [];
+var score;
+var playing = false;
 
 function FallingTetromino(tetrominoIndex, posX, posY) {
     this.tetrominoIndex = tetrominoIndex;
@@ -91,6 +93,8 @@ function FallingTetromino(tetrominoIndex, posX, posY) {
         fallingTetrominoes.forEach((e, index) => {
             if (e === this) fallingTetrominoes.splice(index, 1);
         });
+        fallingTetrominoes.push(new FallingTetromino(0, 22, 0));
+        checkRows();
     };
 }
 
@@ -114,6 +118,27 @@ function getBraille(leftColumn, rightColumn) {
     );
 }
 
+function checkRows() {
+    // Check for full rows
+    for (let index = field.length - 1; index >= 0; index--) {
+        row = field[index];
+        if (row.reduce((a, b) => a + b) == 4) {
+            score++;
+            field.splice(index, 1);
+            field.push([0, 0, 0, 0]);
+            document.title = "Score: " + score;
+        }
+    }
+
+    // Check for game over
+    console.log(field[20].reduce((a, b) => a + b) > 0);
+    if (field[20].reduce((a, b) => a + b) > 0) {
+        playing = false;
+        setUrl("Game Over! Score: " + score);
+        document.title = "url-tetris"
+    }
+}
+
 function renderField(f) {
     if (f.length % 2 == 1) f.push([0, 0, 0, 0]);
     let urlsting = "";
@@ -124,11 +149,13 @@ function renderField(f) {
 }
 
 function renderTetrominoes() {
-    let newField = field;
-    fallingTetrominoes.forEach((e) => {
-        newField = e.render(newField);
-    });
-    renderField(newField);
+    if (playing) {
+        let newField = field;
+        fallingTetrominoes.forEach((e) => {
+            newField = e.render(newField);
+        });
+        renderField(newField);
+    }
 }
 
 function addTetromino(field, tetrominoIndex, posX, posY, rotation) {
@@ -214,28 +241,33 @@ function rightPressed() {
 
 function startGame() {
     field = [];
-    for (let index = 0; index < 300; index++) {
+    fallingTetrominoes = [];
+    score = 0;
+    playing = true;
+    for (let index = 0; index < 30; index++) {
         field.push([0, 0, 0, 0]);
     }
-    fallingTetrominoes = [new FallingTetromino(0, 60, 0), new FallingTetromino(5, 80, 0)];
+    fallingTetrominoes.push(new FallingTetromino(0, 22, 0));
 
     frame();
 }
 
 function frame() {
-    fallingTetrominoes.forEach((e) => e.goLeft());
-    renderTetrominoes();
-    setTimeout(frame, 1000);
+    if (playing) {
+        fallingTetrominoes.forEach((e) => e.goLeft());
+        renderTetrominoes();
+        setTimeout(frame, 1000);
+    }
 }
 
 document.addEventListener("keydown", (e) => {
-    if (e.code === "ArrowUp") upPressed();
-    else if (e.code === "ArrowDown") downPressed();
-    else if (e.code === "ArrowLeft") leftPressed();
-    else if (e.code === "ArrowRight") rightPressed();
-    else if (e.code === "KeyW") upPressed();
-    else if (e.code === "KeyS") downPressed();
-    else if (e.code === "KeyA") leftPressed();
-    else if (e.code === "KeyD") rightPressed();
+    if (e.code === "ArrowUp" && playing) upPressed();
+    else if (e.code === "ArrowDown" && playing) downPressed();
+    else if (e.code === "ArrowLeft" && playing) leftPressed();
+    else if (e.code === "ArrowRight" && playing) rightPressed();
+    else if (e.code === "KeyW" && playing) upPressed();
+    else if (e.code === "KeyS" && playing) downPressed();
+    else if (e.code === "KeyA" && playing) leftPressed();
+    else if (e.code === "KeyD" && playing) rightPressed();
     else if (e.code === "Space") startGame();
 });
