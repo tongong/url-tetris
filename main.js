@@ -46,6 +46,7 @@ var field = [];
 var fallingTetrominoes = [];
 var score;
 var playing = false;
+var timer;
 
 function FallingTetromino(tetrominoIndex, posX, posY) {
     this.tetrominoIndex = tetrominoIndex;
@@ -93,8 +94,8 @@ function FallingTetromino(tetrominoIndex, posX, posY) {
         fallingTetrominoes.forEach((e, index) => {
             if (e === this) fallingTetrominoes.splice(index, 1);
         });
-        fallingTetrominoes.push(new FallingTetromino(0, 22, 0));
         checkRows();
+        if (playing) spawnTetromino();
     };
 }
 
@@ -136,6 +137,7 @@ function checkRows() {
         playing = false;
         setUrl("Game Over! Score: " + score);
         document.title = "url-tetris"
+        window.clearTimeout(timer);
     }
 }
 
@@ -215,6 +217,10 @@ function addTetromino(field, tetrominoIndex, posX, posY, rotation) {
     return { success, collision, field: newField };
 }
 
+function spawnTetromino() {
+    fallingTetrominoes.push(new FallingTetromino(Math.floor(Math.random() * 7), 22, 0));
+}
+
 function upPressed() {
     console.log("up");
     fallingTetrominoes.forEach((e) => e.goUp());
@@ -244,10 +250,11 @@ function startGame() {
     fallingTetrominoes = [];
     score = 0;
     playing = true;
+    window.clearTimeout(timer);
     for (let index = 0; index < 30; index++) {
         field.push([0, 0, 0, 0]);
     }
-    fallingTetrominoes.push(new FallingTetromino(0, 22, 0));
+    spawnTetromino();
 
     frame();
 }
@@ -256,7 +263,7 @@ function frame() {
     if (playing) {
         fallingTetrominoes.forEach((e) => e.goLeft());
         renderTetrominoes();
-        setTimeout(frame, 1000);
+        timer = window.setTimeout(frame, 1000);
     }
 }
 
