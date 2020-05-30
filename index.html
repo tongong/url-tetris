@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <title>url-tetris</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="main.js"></script>
+    </head>
+    <body>
+        <img id="icon" src="icon.svg" alt="Tetris Icon" />
+        <h1 id="header">url-tetris</h1>
+        <hr id="divider" />
+
+        <div id="content">
+            <p>This is a version of the popular Tetris game running in your address bar!</p>
+
+            <h2>CONTROLS</h2>
+            <table>
+                <tr>
+                    <td>W or ⬆️</td>
+                    <td>Move upwards</td>
+                </tr>
+                <tr>
+                    <td>A or ⬅️</td>
+                    <td>Move leftwards</td>
+                </tr>
+                <tr>
+                    <td>S or ⬇️</td>
+                    <td>Move downwards</td>
+                </tr>
+                <tr>
+                    <td>D or ➡️</td>
+                    <td>Rotate</td>
+                </tr>
+                <tr>
+                    <td>SPACE</td>
+                    <td>Start the game</td>
+                </tr>
+            </table>
+
+            <h2>HOW DOES IT WORK</h2>
+            <p>
+                With the <a href="https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState">History.replaceState()</a> method the current url can be changed without reloading the page. For the graphics
+                <a href="https://en.wikipedia.org/wiki/Braille_Patterns">Braille Patterns</a> are used. 
+            </p>
+            <p>Inspired by <a href="http://probablycorey.com/url-hunter">URL Hunter</a> and
+                <a href="http://flappybraille.ndre.gr">Flappy Braille</a>.</p>
+            <p>Code at the <a href="https://github.com/tongong/url-tetris"> GitHub repository</a>.</p>
+        </div>
+
+        <footer>made with &#10084; by <a href="https://github.com/tongong">tongong</a></footer>
+    </body>
+</html>
