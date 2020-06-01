@@ -47,6 +47,7 @@ var fallingTetrominoes = [];
 var score;
 var playing = false;
 var timer;
+var speed;
 
 function FallingTetromino(tetrominoIndex, posX, posY) {
     this.tetrominoIndex = tetrominoIndex;
@@ -125,6 +126,7 @@ function checkRows() {
         row = field[index];
         if (row.reduce((a, b) => a + b) == 4) {
             score++;
+            speed *= 0.97;
             field.splice(index, 1);
             field.push([0, 0, 0, 0]);
             document.title = "Score: " + score;
@@ -135,8 +137,9 @@ function checkRows() {
     console.log(field[20].reduce((a, b) => a + b) > 0);
     if (field[20].reduce((a, b) => a + b) > 0) {
         playing = false;
-        setUrl("Game Over! Score: " + score);
-        document.title = "url-tetris"
+        if (score > (localStorage.getItem("highscore") || -1)) localStorage.setItem("highscore", score);
+        setUrl("Game Over! Score: " + score + " | High Score: " + localStorage.getItem("highscore"));
+        document.title = "url-tetris";
         window.clearTimeout(timer);
     }
 }
@@ -246,6 +249,7 @@ function rightPressed() {
 }
 
 function startGame() {
+    speed = 600;
     field = [];
     fallingTetrominoes = [];
     score = 0;
@@ -263,7 +267,7 @@ function frame() {
     if (playing) {
         fallingTetrominoes.forEach((e) => e.goLeft());
         renderTetrominoes();
-        timer = window.setTimeout(frame, 1000);
+        timer = window.setTimeout(frame, speed);
     }
 }
 
