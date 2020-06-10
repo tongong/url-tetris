@@ -35,9 +35,7 @@ This project was made in vanilla JavaScript. With the [History.replaceState()](h
 
 ## Browser support
 
-I tested the game with Firefox and Chrome for both Linux and Android. Desktop Firefox works perfectly. Chrome behaves weirdly: some Unicode characters are percent-encoded in the url, some aren't. On both of the tested Android browsers all Unicode characters are percent-encoded. That's why I didn't add mobile controls.
-
-UPDATE: Apparently the latest version of Firefox now also behaves like Chrome and doesn't work correctly.
+I tested the game with Firefox and Chrome for both Linux and Android. Firefox and Chrome work perfectly on desktop. On the tested mobile browsers all Unicode characters are percent-encoded. That's why I didn't add mobile controls.
 
 ## Inspired by
 
