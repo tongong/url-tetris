@@ -1,4 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@600&display=swap");
+/* fira-code-600 - latin */
+@font-face {
+    font-family: "Fira Code";
+    font-style: normal;
+    font-weight: 600;
+    src: local(""), /* Chrome 26+, Opera 23+, Firefox 39+ */ url("../fonts/fira-code-v8-latin-600.woff2") format("woff2"),
+        /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ url("../fonts/fira-code-v8-latin-600.woff") format("woff");
+}
 
 body {
     font-family: "Fira Code", monospace;
