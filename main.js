@@ -107,7 +107,7 @@ function setUrl(url) {
 // leftColoum and rightColoum are arrays of bit from the top to the bottom
 function getBraille(leftColumn, rightColumn) {
     // https://en.wikipedia.org/wiki/Braille_Patterns
-    return String.fromCharCode(
+    let brailleChar = String.fromCharCode(
         0x2800 +
             leftColumn[0] +
             leftColumn[1] * 2 +
@@ -118,6 +118,8 @@ function getBraille(leftColumn, rightColumn) {
             leftColumn[3] * 64 +
             rightColumn[3] * 128
     );
+    if (brailleChar == "⠀") brailleChar = "_";  // Remove empty braille characters
+    return brailleChar;
 }
 
 function checkRows() {
@@ -138,7 +140,7 @@ function checkRows() {
     if (field[20].reduce((a, b) => a + b) > 0) {
         playing = false;
         if (score > (localStorage.getItem("highscore") || -1)) localStorage.setItem("highscore", score);
-        setUrl("Game Over! Score: " + score + " | High Score: " + localStorage.getItem("highscore"));
+        setUrl("GameOver!........Score:" + score + "........HighScore:" + localStorage.getItem("highscore"));
         document.title = "url-tetris";
         window.clearTimeout(timer);
     }
