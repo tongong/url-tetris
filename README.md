@@ -2,7 +2,7 @@
 
 This is a version of the popular Tetris game running in your address bar!
 
-[View Demo](https://url-tetris.tongong.now.sh/)
+[View Demo](https://tongong.github.io/url-tetris/)
 
 ## Controls
 
